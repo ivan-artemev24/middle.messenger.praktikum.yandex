@@ -1,0 +1,135 @@
+.feed {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.feed--empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.feed--empty > p {
+  color: var(--text-secondary-color);
+  line-height: 12px;
+  opacity: 0.6;
+}
+
+.feed__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feed__contact {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.feed__main {
+  flex: 1;
+  height: calc(100vh - 108px);
+  overflow-y: auto;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.feed__new-message {
+  margin-top: 11px;
+}
+
+.feed__new-message form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.feed__input {
+  flex: 1;
+}
+
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.menu-button .point {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--text-primary-color);
+}
+
+.menu-button:hover,
+.menu-button--active {
+  background-color: var(--hover-grey-color);
+}
+
+.menu-button:hover .point,
+.menu-button--active .point {
+  background-color: var(--primary-color);
+}
+
+.message {
+  position: relative;
+  max-width: 500px;
+  padding: 11px;
+  margin-bottom: 10px;
+  background-color: var(--background-message-grey-color);
+  border-radius: 12px;
+  align-self: flex-start;
+}
+
+.message--own {
+  background-color: var(--background-message-blue-color);
+  align-self: flex-end;
+}
+
+.message--image-only {
+  padding: 0;
+  background-color: transparent;
+}
+
+.message__image {
+  max-width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.message__time {
+  float: right;
+  font-size: 9px;
+  line-height: 9px;
+  color: var(--text-secondary-color);
+}
+
+.message__time--darkened {
+  position: absolute;
+  right: 11px;
+  bottom: 11px;
+  border-radius: 30px;
+  padding: 2px 7px;
+  color: var(--white-color);
+  background-color: rgba(82, 82, 82, 0.5);
+}

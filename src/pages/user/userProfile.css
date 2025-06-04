@@ -1,0 +1,98 @@
+.user-profile {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.user-profile__back-button {
+  width: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-list-color);
+}
+
+.user-profile__back-button svg {
+  transform: rotate(180deg);
+}
+
+.user-profile__main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-profile__main > form {
+  width: 510px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.user-profile__short-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile__short-info > p {
+  margin-top: 21px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.user-profile__avatar-button {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-profile__avatar-button > .overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.user-profile__avatar-button > .overlay > span {
+  font-size: 13px;
+  line-height: 14px;
+  white-space: wrap;
+  color: var(--white-color);
+}
+
+.user-profile__avatar-button:hover > .overlay {
+  display: flex;
+}
+
+.user-profile__line {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.user-profile__line:last-child {
+  border-bottom: none;
+}
+
+.user-profile__controls--edit {
+  display: flex;
+  justify-content: center;
+}
+
+.user-profile__controls--edit > button {
+  width: 280px;
+}
+
+.button--exit button {
+  color: var(--error-color);
+}
