@@ -35,6 +35,7 @@ npm run start
 ## 🌐 Деплой
 
 Проект автоматически деплоится через Netlify.  
+
 **Ссылка:** [https://resilient-liger-f82a71.netlify.app](https://resilient-liger-f82a71.netlify.app)
 
 ## 📄 Страницы
@@ -55,4 +56,9 @@ npm run start
 - Vite
 - PostCSS (nested, preset-env, autoprefixer)
 - stylelint
+
+
+## 🔗 Pull request
+
+[PR Sprint 1](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/1)
 
