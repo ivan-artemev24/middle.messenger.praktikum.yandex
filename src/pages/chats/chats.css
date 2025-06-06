@@ -1,0 +1,42 @@
+.chats {
+  width: 100vw;
+  display: flex;
+}
+
+.chats__sidebar {
+  width: 25%;
+  min-width: 310px;
+  height: 100vh;
+  background-color: var(--background-list-color);
+}
+
+.chats__header {
+  padding: 21px 10px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chats__button-link {
+  color: var(--text-secondary-color);
+  font-size: 12px;
+  line-height: 12px;
+  margin-bottom: 23px;
+  align-self: flex-end;
+}
+
+.chats__button-link:hover {
+  color: var(--primary-color);
+}
+
+.chats__list {
+  height: calc(100vh - 105px);
+  border-top: 1px solid var(--border-color);
+  overflow: auto;
+}
+
+.chats__main {
+  flex: 1;
+  height: 100vh;
+  min-width: 320px;
+  border-left: 1px solid var(--border-color);
+}

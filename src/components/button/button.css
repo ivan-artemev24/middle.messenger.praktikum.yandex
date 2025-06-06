@@ -1,0 +1,46 @@
+.button {
+  padding: 12px 20px;
+  border: none;
+  background-color: var(--background-fill-color);
+  color: var(--text-secondary-color);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus,
+.button:focus-visible {
+  opacity: 0.75;
+}
+
+.button--primary {
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.button--link {
+  background-color: transparent;
+  color: var(--primary-color);
+  padding: 0;
+}
+
+.button--icon {
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 9px;
+}
+
+.button--icon span {
+  display: block;
+  line-height: 0;
+}
+
+.button--icon svg {
+  fill: var(--white-color);
+}

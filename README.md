@@ -4,7 +4,7 @@
 
 ## 🎨 Дизайн
 
-[Макет в Figma](https://www.figma.com/design/q6ALe9fipHxAYiV6ToS2Vp/Chat_design?node-id=12-35&t=z4eEVMzexzEChXg2-0)
+[Макет в Figma](https://www.figma.com/design/q6ALe9fipHxAYiV6ToS2Vp/Chat_design?node-id=12-35&t=z4eEVMzexzEChXg2-1)
 
 ## 📦 Функции
 
@@ -35,17 +35,19 @@ npm run start
 ## 🌐 Деплой
 
 Проект автоматически деплоится через Netlify.  
-**Ссылка:** [https://your-project-name.netlify.app](https://your-project-name.netlify.app)
+
+**Ссылка:** [https://resilient-liger-f82a71.netlify.app](https://resilient-liger-f82a71.netlify.app)
 
 ## 📄 Страницы
 
-- `/login` — Вход
-- `/registration` — Регистрация
-- `/chats` — Список чатов
-- `/user-profile` — Профиль (только чтение)
-- `/edit-user-profile` — Редактирование профиля
-- `/edit-password` — Смена пароля
-- `/404`, `/500` — Служебные страницы
+- [`/login`](https://resilient-liger-f82a71.netlify.app/login) — Вход
+- [`/registration`](https://resilient-liger-f82a71.netlify.app/registration) — Регистрация
+- [`/chats`](https://resilient-liger-f82a71.netlify.app/chats) — Список чатов
+- [`/user-profile`](https://resilient-liger-f82a71.netlify.app/user-profile) — Профиль (только чтение)
+- [`/edit-user-profile`](https://resilient-liger-f82a71.netlify.app/edit-user-profile) — Редактирование профиля
+- [`/edit-password`](https://resilient-liger-f82a71.netlify.app/edit-password) — Смена пароля
+- [`/404`](https://resilient-liger-f82a71.netlify.app/404) — Страница 404
+- [`/500`](https://resilient-liger-f82a71.netlify.app/500) — Страница 500
 
 ## 🛠️ Технологии
 
@@ -55,6 +57,8 @@ npm run start
 - PostCSS (nested, preset-env, autoprefixer)
 - stylelint
 
+
 ## 🔗 Pull request
 
 [PR Sprint 1](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/1)
+
