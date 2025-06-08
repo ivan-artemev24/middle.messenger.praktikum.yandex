@@ -11,7 +11,7 @@ import template from './userProfile.hbs?raw'
 import './userProfile.css'
 
 class ModalContent extends Block {
-  render(): DocumentFragment {
+  render (): DocumentFragment {
     const temp = document.createElement('template')
     temp.innerHTML = this.props.content ?? ''
     return temp.content
@@ -19,7 +19,7 @@ class ModalContent extends Block {
 }
 
 export class UserProfilePage extends Block {
-  constructor(props?: Props) {
+  constructor (props?: Props) {
     const avatar = new AvatarComponent({
       src: userMockData.avatar,
       width: '130px',
@@ -38,7 +38,7 @@ export class UserProfilePage extends Block {
       type: 'button',
       variant: 'link',
       events: {
-        click: () => this.setProps({ disableEdit: false })
+        click: () => { this.setProps({ disableEdit: false }) }
       }
     })
 
@@ -47,7 +47,7 @@ export class UserProfilePage extends Block {
       type: 'button',
       variant: 'link',
       events: {
-        click: () => this.setProps({ disableEdit: true })
+        click: () => { this.setProps({ disableEdit: true }) }
       }
     })
 
@@ -106,7 +106,7 @@ export class UserProfilePage extends Block {
       id: 'change-avatar-modal',
       active: false,
       content: modalBlock,
-      onClose: () => this.setProps({ modalActive: false })
+      onClose: () => { this.setProps({ modalActive: false }) }
     })
 
     super('div', {
@@ -175,7 +175,7 @@ export class UserProfilePage extends Block {
     })
   }
 
-  render(): DocumentFragment {
+  render (): DocumentFragment {
     const disableEdit = this.props.disableEdit
     const u = this.props.user
 

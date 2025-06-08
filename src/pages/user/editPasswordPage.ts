@@ -9,7 +9,7 @@ import template from './editPassword.hbs?raw'
 import './userProfile.css'
 
 export class EditPasswordPage extends Block {
-  constructor(props?: Props) {
+  constructor (props?: Props) {
     const avatar = new AvatarComponent({
       src: '/assets/avatar.jpg',
       width: '130px',
@@ -99,7 +99,7 @@ export class EditPasswordPage extends Block {
     })
   }
 
-  render(): DocumentFragment {
+  render (): DocumentFragment {
     const oldPasswordInput = new InputComponent({
       name: 'oldPassword',
       type: 'password',
