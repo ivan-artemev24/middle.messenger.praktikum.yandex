@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start": "vite preview --port 3000 --strictPort",
+    "start": "vite preview --port 3000",
     "lint": "eslint . --ext .ts,.tsx,.js && tsc --noEmit",
     "lint:css": "stylelint \"**/*.css\" --config stylelint.config.cjs"
   },
