@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start": "vite preview --port 3000",
+    "preview": "npx vite preview",
+    "start": "npm run build && npm run preview",
     "lint": "eslint . --ext .ts,.tsx,.js && tsc --noEmit",
     "lint:css": "stylelint \"**/*.css\" --config stylelint.config.cjs"
   },
