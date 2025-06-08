@@ -1,8 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: '.',
-  publicDir: './public',
   build: {
     outDir: './dist',
     emptyOutDir: true
@@ -13,6 +11,5 @@ export default defineConfig({
   preview: {
     port: 3000
   },
-  css: {},
   appType: 'spa'
 });
