@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "npx vite preview",
-    "start": "npm run build && npm run preview",
+    "start": "vite preview --port 3000",
     "lint": "eslint . --ext .ts,.tsx,.js && tsc --noEmit",
     "lint:css": "stylelint \"**/*.css\" --config stylelint.config.cjs"
   },
