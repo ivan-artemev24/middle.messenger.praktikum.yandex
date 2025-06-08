@@ -71,3 +71,5 @@ npm run lint       # Проверка TypeScript + Stylelint
 npm run lint:css   # Только stylelint
 tsc --noEmit       # Проверка типов вручную
 ```
+=======
+[PR Sprint 2](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/3)
