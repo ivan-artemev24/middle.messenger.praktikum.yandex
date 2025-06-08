@@ -79,7 +79,12 @@ document.addEventListener('click', (event) => {
   }
 })
 
-// === Запуск роутера ===
+//Запуск роутера
 document.addEventListener('DOMContentLoaded', () => {
+  const currentPath = window.location.pathname
+  if (currentPath === '/') {
+    navigate('/login')
+  }
   startRouter()
 })
+
