@@ -1,82 +1,85 @@
-import Handlebars from "handlebars";
-import * as Components from "./components";
-import * as Pages from "./pages";
-import "./style.css";
-import "./helpers/handlebarsHelpers.js";
+import Handlebars from 'handlebars'
+import * as Components from './components'
+import * as Pages from './pages'
+import { registerRoute, navigate, startRouter } from './core/router'
+import './style.css'
 
-import arrowIcon from "./assets/arrow-icon.svg?raw";
-import searchIcon from "./assets/search-icon.svg?raw";
+import './helpers/handlebarsHelpers.js'
 
-import { chatsMockData, userMockData } from "./mockData.js";
+import arrowIcon from './assets/arrow-icon.svg?raw'
+import searchIcon from './assets/search-icon.svg?raw'
+import { chatsMockData, userMockData } from './mockData.js'
 
-type PageContext = Record<string, any>;
-type PageEntry = [string, PageContext];
+// === Регистрация только шаблонов как partials ===
+Object.entries(Components).forEach(([name, template]) => {
+  if (typeof template === 'string') {
+    Handlebars.registerPartial(name, template)
+  }
+})
 
+// === Общий контекст для профиля ===
 const baseUserContext = {
   arrowIcon,
-  user: userMockData,
-};
+  user: userMockData
+}
 
-const pages: Record<string, PageEntry> = {
-  login: [Pages.LoginPage, {}],
-  registration: [Pages.RegistrationPage, {}],
-  chats: [Pages.ChatsPage, {
+// === Роутинг ===
+registerRoute('/login', () => {
+  const page = new Pages.LoginPage()
+  return page.getContent() ?? document.createElement('div')
+})
+
+registerRoute('/registration', () => {
+  const page = new Pages.RegistrationPage()
+  return page.getContent() ?? document.createElement('div')
+})
+
+registerRoute('/chats', () => {
+  const page = new Pages.ChatsPage({
     arrowIcon,
     searchIcon,
     showDialog: true,
-    data: chatsMockData,
-  }],
-  "user-profile": [Pages.UserProfilePage, {
+    data: chatsMockData
+  })
+  return page.getContent() ?? document.createElement('div')
+})
+
+registerRoute('/user-profile', () => {
+  const page = new Pages.UserProfilePage({
     ...baseUserContext,
-    disableEdit: true,
-  }],
-  "edit-user-profile": [Pages.UserProfilePage, {
+    disableEdit: true
+  })
+  return page.getContent() ?? document.createElement('div')
+})
+
+registerRoute('/edit-user-profile', () => {
+  const page = new Pages.UserProfilePage({
     ...baseUserContext,
-    disableEdit: false,
-  }],
-  "edit-password": [Pages.EditPasswordPage, {
-    ...baseUserContext,
-  }],
-};
+    disableEdit: false
+  })
+  return page.getContent() ?? document.createElement('div')
+})
 
-Object.entries(Components).forEach(([name, template]) => {
-  Handlebars.registerPartial(name, template);
-});
+registerRoute('/edit-password', () => {
+  const page = new Pages.EditPasswordPage({
+    ...baseUserContext
+  })
+  return page.getContent() ?? document.createElement('div')
+})
 
-function navigate(page: string): void {
-  const pageEntry = pages[page];
-  if (!pageEntry) {
-    console.warn(`Page "${page}" not found.`);
-    return;
-  }
+// === Навигация по data-page="..." ===
+document.addEventListener('click', (event) => {
+  const target = (event.target as HTMLElement).closest('[data-page]')
+  if (!target) return
 
-  const [source, context] = pageEntry;
-  const container = document.getElementById("app");
-  if (!container) return;
-
-  const render = Handlebars.compile(source);
-  container.innerHTML = render(context);
-}
-
-function getCurrentPage(): string {
-  const parts = window.location.pathname.split("/").filter(Boolean);
-  return parts.length ? parts[0] : "login";
-}
-
-function handleNavigationClick(event: MouseEvent): void {
-  const target = (event.target as HTMLElement)?.closest("[data-page]");
-  if (!target) return;
-
-  const page = target.getAttribute("data-page");
+  const page = target.getAttribute('data-page')
   if (page) {
-    navigate(page);
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    event.preventDefault()
+    navigate('/' + page)
   }
-}
+})
 
-document.addEventListener("DOMContentLoaded", () => {
-  navigate(getCurrentPage());
-});
-
-document.addEventListener("click", handleNavigationClick);
+// === Запуск роутера ===
+document.addEventListener('DOMContentLoaded', () => {
+  startRouter()
+})

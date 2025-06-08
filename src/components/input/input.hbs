@@ -2,15 +2,17 @@
   {{#if leftIcon}}
     <span class="input-field__left-icon">{{{leftIcon}}}</span>
   {{/if}}
+
+  <label class="input-field__label" for="{{default id name}}">{{label}}</label>
+
   <input
-    id="{{id}}"
-    name="{{id}}"
+    id="{{default id name}}"
+    name="{{name}}"
     type="{{default type "text"}}"
     form="{{formId}}"
     {{#if disabled}}disabled{{/if}}
-    {{#if value}}value="{{value}}"{{/if}}
-  >
-  <label for="{{id}}">{{label}}</label>
+    {{#if value}}value="{{value}}"{{/if}}>
+
   {{#if errorMessage}}
     <div class="input-field__error-label">{{errorMessage}}</div>
   {{/if}}

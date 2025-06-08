@@ -1,5 +1,5 @@
 <div class="chat-item {{#if selected}}chat-item--selected{{/if}}">
-  {{> Avatar avatar=avatar width="47px" height="47px" class="chat-item__avatar"}}
+  {{> Avatar src=avatarSrc width="47px" height="47px" alt=alt customClass="chat-item__avatar"}}
   <div class="chat-item__info">
     <span class="chat-item__name">{{name}}</span>
     <span class="chat-item__last">{{lastMessage}}</span>

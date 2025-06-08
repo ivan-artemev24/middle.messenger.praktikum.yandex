@@ -2,6 +2,9 @@
   width: 100vw;
   display: flex;
 }
+.chat-input {
+  width: 100%;
+}
 
 .chats__sidebar {
   width: 25%;

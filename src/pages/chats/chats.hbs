@@ -1,20 +1,15 @@
 <div class="chats">
   <aside class="chats__sidebar">
     <div class="chats__header">
-      {{> Button label="Профиль" customClass="chats__button-link" variant="link" page="user-profile" type="button"}}
-      {{> Input id="search" name="search" label="Поиск" type="text" variant="outlined" leftIcon=searchIcon}}
+      {{{profileButton}}}
+      {{{searchInput}}}
     </div>
     <div class="chats__list">
-      {{#each data.chats}}
-        {{> ChatItem this}}
-      {{/each}}
+      {{{chatItems}}}
     </div>
   </aside>
+
   <section class="chats__main">
-    {{#if showDialog}}
-      {{> CorrespondenceFeed contact=data.selectedChat messages=data.messages arrowIcon=arrowIcon }}
-    {{else}}
-      {{> EmptyFeed }}
-    {{/if}}
+    {{{feed}}}
   </section>
 </div>
