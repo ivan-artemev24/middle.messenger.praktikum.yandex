@@ -1,20 +1,30 @@
 .input-field {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.input-field * {
+  box-sizing: border-box;
 }
 
 .input-field input {
-  border: none;
   width: 100%;
   font-size: 13px;
   line-height: 13px;
   color: var(--text-primary-color);
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
 .input-field__left-icon {
   position: absolute;
-  display: block;
   left: 10px;
-  top: 7px;
+  top: 50%;
+  transform: translateY(-50%);
   line-height: 0;
 }
 
@@ -23,37 +33,40 @@
   height: 20px;
 }
 
+.input-field__left-icon + input {
+  padding-left: 34px;
+}
+
+.input-field__label {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-secondary-color);
+  margin-bottom: 4px;
+}
+
 .input-field__error-label {
   color: var(--error-color);
   font-weight: 400;
   font-size: 8px;
   line-height: 8px;
-  margin-top: 7px;
+  margin-top: 4px;
+}
+
+.input-field--error input {
+  border-color: var(--error-color) !important;
 }
 
 .input-field--standard input {
-  padding: 16px 20px 7px 0;
+  padding: 8px 0;
   border-bottom: 1px solid var(--text-secondary-color);
-  background-color: transparent;
 }
 
-.input-field--standard input:focus,
-.input-field--standard input:focus-visible {
-  border-bottom: 1px solid var(--primary-color);
+.input-field--standard input:focus {
+  border-bottom-color: var(--primary-color);
 }
 
-.input-field--standard label {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 9px;
-  line-height: 9px;
-  color: var(--text-secondary-color);
-}
-
-.input-field--standard input:placeholder-shown ~ label {
-  visibility: hidden;
+.input-field--outlined {
+  position: relative;
 }
 
 .input-field--outlined input {
@@ -62,30 +75,31 @@
   background-color: var(--background-fill-color);
   font-size: 12px;
   line-height: 15px;
-  white-space: wrap;
+  border: 1px solid var(--text-secondary-color);
 }
 
-.input-field--outlined label {
+.input-field--outlined .input-field__label {
   display: none;
+}
+
+.input-field--line {
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input-field--line .input-field__label {
+  margin: 0;
 }
 
 .input-field--line input {
   font-size: 13px;
   line-height: 13px;
+  text-align: right;
   padding: 0;
   border: none;
-  text-align: right;
-  color: var(--text-secondary-color);
 }
 
 .input-field--line input:disabled {
   background-color: transparent;
-}
-
-.input-field--error input {
-  border-color: var(--error-color);
-}
-
-.input-field__left-icon + input {
-  padding-left: 34px;
 }

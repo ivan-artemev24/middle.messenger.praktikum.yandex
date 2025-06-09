@@ -1,14 +1,14 @@
 <button
-  class="button button--{{variant}} {{customClass}}"
+  class="button button--{{default variant 'primary'}} {{customClass}}"
   {{#if page}}data-page="{{page}}"{{/if}}
-  {{#if type}}type="{{type}}"{{/if}}>
-
+  type="{{default type 'button'}}">
   {{#if icon}}
     <span class="icon">
       {{{icon}}}
     </span>
-  {{else}}
-    {{label}}
   {{/if}}
 
+  {{#if label}}
+    <span class="button__text">{{label}}</span>
+  {{/if}}
 </button>

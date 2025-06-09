@@ -96,3 +96,14 @@
 .button--exit button {
   color: var(--error-color);
 }
+.input--error {
+  border: 1px solid var(--error-color);
+}
+
+.input-error-text {
+  display: block;
+  color: var(--error-color);
+  font-size: 11px;
+  line-height: 13px;
+  margin-top: 4px;
+}

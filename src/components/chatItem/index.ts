@@ -1,2 +1,2 @@
-import "./chatItem.css";
-export { default as ChatItem } from "./chatItem.hbs?raw";
+export { default } from './chatItem.hbs?raw'
+export { ChatItem as ChatItemComponent } from './chatItem'
