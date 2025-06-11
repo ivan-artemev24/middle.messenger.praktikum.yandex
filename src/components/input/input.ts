@@ -16,6 +16,7 @@ interface InputProps {
   customClass?: string
   variant?: 'standard' | 'outlined' | 'line'
   leftIcon?: string
+  [key: string]: unknown
 }
 
 export class Input extends Block {

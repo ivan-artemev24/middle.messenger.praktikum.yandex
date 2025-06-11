@@ -8,6 +8,7 @@ interface ModalProps {
   active?: boolean
   content: Block
   onClose?: () => void
+  [key: string]: unknown
 }
 
 export class Modal extends Block {
@@ -27,8 +28,10 @@ export class Modal extends Block {
     const fragment = temp.content
 
     const overlay = fragment.querySelector('.modal__overlay')
-    if (overlay && this.props.onClose) {
-      overlay.addEventListener('click', () => this.props.onClose?.())
+    const props = this.props as ModalProps
+
+    if (overlay && props.onClose) {
+      overlay.addEventListener('click', () => props.onClose?.())
     }
 
     return fragment

@@ -47,10 +47,9 @@ export class LoginPage extends Block {
       submitButton,
       linkButton,
       events: {
-        submit: (e: SubmitEvent) => {
+        submit: function (e: Event) {
           e.preventDefault()
           const form = e.target as HTMLFormElement
-
           const inputs = form.querySelectorAll('input')
           let isValid = true
 
@@ -81,29 +80,11 @@ export class LoginPage extends Block {
           console.log('Авторизация:', data)
 
           navigate('/chats')
-        }
-      }
-    })
-  }
+        },
+        focusout: function (e: Event) {
+          const input = e.target as HTMLInputElement
+          if (input.tagName !== 'INPUT') return
 
-  render (): DocumentFragment {
-    const compiled = Handlebars.compile(template)
-    const html = compiled({
-      loginInput: this.props.loginInput?.getContent?.()?.outerHTML ?? '',
-      passwordInput: this.props.passwordInput?.getContent?.()?.outerHTML ?? '',
-      submitButton: this.props.submitButton?.getContent?.()?.outerHTML ?? '',
-      linkButton: this.props.linkButton?.getContent?.()?.outerHTML ?? ''
-    })
-
-    const temp = document.createElement('template')
-    temp.innerHTML = html
-
-    const form = temp.content.querySelector('form')
-    if (form && typeof this.props.events?.submit === 'function') {
-      form.addEventListener('submit', this.props.events.submit as (this: HTMLFormElement, ev: SubmitEvent) => void)
-      const inputs = form.querySelectorAll('input')
-      inputs.forEach(input => {
-        input.addEventListener('blur', () => {
           const error = validateInput(input.name, input.value)
           const wrapper = input.closest('.input-field')
           let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
@@ -116,15 +97,39 @@ export class LoginPage extends Block {
 
           if (error) {
             input.classList.add('input--error')
-            if (errorSpan) errorSpan.textContent = error
+            errorSpan.textContent = error
           } else {
             input.classList.remove('input--error')
-            if (errorSpan) errorSpan.textContent = ''
+            errorSpan.textContent = ''
           }
-        })
-      })
+        }
+      }
+    })
+  }
+
+  render (): DocumentFragment {
+    const {
+      loginInput,
+      passwordInput,
+      submitButton,
+      linkButton
+    } = this.props as {
+      loginInput: Block
+      passwordInput: Block
+      submitButton: Block
+      linkButton: Block
     }
 
+    const compiled = Handlebars.compile(template)
+    const html = compiled({
+      loginInput: loginInput?.getContent?.()?.outerHTML ?? '',
+      passwordInput: passwordInput?.getContent?.()?.outerHTML ?? '',
+      submitButton: submitButton?.getContent?.()?.outerHTML ?? '',
+      linkButton: linkButton?.getContent?.()?.outerHTML ?? ''
+    })
+
+    const temp = document.createElement('template')
+    temp.innerHTML = html
     return temp.content
   }
 }

@@ -9,6 +9,7 @@ interface AvatarProps {
   height?: string
   alt?: string
   customClass?: string
+  [key: string]: unknown
 }
 
 export class Avatar extends Block {

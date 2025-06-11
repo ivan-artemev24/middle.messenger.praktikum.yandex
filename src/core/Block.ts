@@ -1,14 +1,14 @@
-import { EventBus } from './EventBus'
 import Handlebars from 'handlebars'
+import { EventBus } from './EventBus'
 
-export type Props = Record<string, any>
+export type Props = Record<string, unknown>
 
 export abstract class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
-    FLOW_RENDER: 'flow:render',
-    FLOW_CDU: 'flow:component-did-update'
+    FLOW_CDU: 'flow:component-did-update',
+    FLOW_RENDER: 'flow:render'
   }
 
   private _element: HTMLElement | null = null
@@ -28,8 +28,11 @@ export abstract class Block {
   private _registerEvents (eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this))
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
+    eventBus.on(Block.EVENTS.FLOW_CDU, (...args: unknown[]) => {
+      const [oldProps, newProps] = args as [Props, Props]
+      this._componentDidUpdateHandler(oldProps, newProps)
+    })
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this))
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdateHandler.bind(this))
   }
 
   private _init () {
@@ -51,16 +54,19 @@ export abstract class Block {
 
   protected componentDidUpdate (_oldProps: Props, _newProps: Props): void {}
 
-  private _componentDidUpdateHandler (...args: unknown[]): void {
-    const [oldProps, newProps] = args as [Props, Props]
+  private readonly _componentDidUpdateHandler = (oldProps: Props, newProps: Props) => {
     this.componentDidUpdate(oldProps, newProps)
+    this.eventBus.emit(Block.EVENTS.FLOW_RENDER)
   }
 
   private _render () {
     const block = this.render()
-    if (this._element) {
-      this._element.innerHTML = ''
-      this._element.appendChild(block)
+    const el = this._element
+    if (el) {
+      this._removeEvents(el)
+      el.innerHTML = ''
+      el.appendChild(block)
+      this._addEvents(el)
     }
   }
 
@@ -93,7 +99,29 @@ export abstract class Block {
     })
   }
 
-  protected compile (template: string, context: Record<string, any>): DocumentFragment {
+  private _addEvents (el: HTMLElement): void {
+    const events = this.props.events as Record<string, EventListener> | undefined
+    if (!events) return
+
+    Object.entries(events).forEach(([event, listener]) => {
+      if (typeof listener === 'function') {
+        el.addEventListener(event, listener)
+      }
+    })
+  }
+
+  private _removeEvents (el: HTMLElement): void {
+    const events = this.props.events as Record<string, EventListener> | undefined
+    if (!events) return
+
+    Object.entries(events).forEach(([event, listener]) => {
+      if (typeof listener === 'function') {
+        el.removeEventListener(event, listener)
+      }
+    })
+  }
+
+  protected compile (template: string, context: Record<string, unknown>): DocumentFragment {
     const compiled = Handlebars.compile(template)
     const html = compiled(context)
     const temp = document.createElement('template')

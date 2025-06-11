@@ -1,6 +1,5 @@
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
-import type { Props } from '../../core/Block'
+import { Block, type Props } from '../../core/Block'
 import { InputComponent } from '../../components/input'
 import { ButtonComponent } from '../../components/button'
 import { AvatarComponent } from '../../components/avatar'
@@ -38,6 +37,7 @@ export class EditPasswordPage extends Block {
       events: {
         submit: function (this: HTMLFormElement, e: SubmitEvent) {
           e.preventDefault()
+
           const form = e.target as HTMLFormElement
           const inputs = form.querySelectorAll('input')
           let isValid = true
@@ -46,7 +46,6 @@ export class EditPasswordPage extends Block {
 
           inputs.forEach(input => {
             const error = validateInput(input.name, input.value)
-
             if (input.name === 'newPassword') newPassword = input.value
             if (input.name === 'newPasswordAgain') newPasswordAgain = input.value
 
@@ -70,21 +69,19 @@ export class EditPasswordPage extends Block {
           })
 
           if (newPassword && newPasswordAgain && newPassword !== newPasswordAgain) {
-            const newAgainInput = form.querySelector<HTMLInputElement>('input[name="newPasswordAgain"]')
-            if (newAgainInput) {
-              const wrapper = newAgainInput.closest('.input-field')
-              let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
+            const againInput = form.querySelector<HTMLInputElement>('input[name="newPasswordAgain"]')
+            const wrapper = againInput?.closest('.input-field')
+            let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
 
-              if (!errorSpan) {
-                errorSpan = document.createElement('span')
-                errorSpan.className = 'input-error-text'
-                wrapper?.appendChild(errorSpan)
-              }
-
-              newAgainInput.classList.add('input--error')
-              if (errorSpan) errorSpan.textContent = 'Пароли не совпадают'
-              isValid = false
+            if (!errorSpan && wrapper) {
+              errorSpan = document.createElement('span')
+              errorSpan.className = 'input-error-text'
+              wrapper.appendChild(errorSpan)
             }
+
+            againInput?.classList.add('input--error')
+            if (errorSpan) errorSpan.textContent = 'Пароли не совпадают'
+            isValid = false
           }
 
           if (!isValid) return
@@ -93,6 +90,29 @@ export class EditPasswordPage extends Block {
           console.log('Смена пароля:')
           for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${String(value)}`)
+          }
+        },
+
+        focusout: function (e: Event) {
+          const input = e.target as HTMLInputElement
+          if (input.tagName !== 'INPUT') return
+
+          const error = validateInput(input.name, input.value)
+          const wrapper = input.closest('.input-field')
+          let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
+
+          if (!errorSpan) {
+            errorSpan = document.createElement('span')
+            errorSpan.className = 'input-error-text'
+            wrapper?.appendChild(errorSpan)
+          }
+
+          if (error) {
+            input.classList.add('input--error')
+            if (errorSpan) errorSpan.textContent = error
+          } else {
+            input.classList.remove('input--error')
+            if (errorSpan) errorSpan.textContent = ''
           }
         }
       }
@@ -127,45 +147,16 @@ export class EditPasswordPage extends Block {
     const compiled = Handlebars.compile(template)
     const html = compiled({
       ...this.props,
-      avatar: this.props.avatar?.getContent?.()?.outerHTML ?? '',
-      backButton: this.props.backButton?.getContent?.()?.outerHTML ?? '',
+      avatar: (this.props.avatar as Block)?.getContent?.()?.outerHTML ?? '',
+      backButton: (this.props.backButton as Block)?.getContent?.()?.outerHTML ?? '',
       oldPasswordInput: oldPasswordInput.getContent()?.outerHTML ?? '',
       newPasswordInput: newPasswordInput.getContent()?.outerHTML ?? '',
       newPasswordAgainInput: newPasswordAgainInput.getContent()?.outerHTML ?? '',
-      submitButton: this.props.submitButton?.getContent?.()?.outerHTML ?? ''
+      submitButton: (this.props.submitButton as Block)?.getContent?.()?.outerHTML ?? ''
     })
 
     const temp = document.createElement('template')
     temp.innerHTML = html
-
-    const form = temp.content.querySelector('form')
-    if (form && typeof this.props.events?.submit === 'function') {
-      form.addEventListener('submit', this.props.events.submit as (this: HTMLFormElement, ev: SubmitEvent) => void)
-
-      const inputs = form.querySelectorAll('input')
-      inputs.forEach(input => {
-        input.addEventListener('blur', () => {
-          const error = validateInput(input.name, input.value)
-          const wrapper = input.closest('.input-field')
-          let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
-
-          if (!errorSpan) {
-            errorSpan = document.createElement('span')
-            errorSpan.className = 'input-error-text'
-            wrapper?.appendChild(errorSpan)
-          }
-
-          if (error) {
-            input.classList.add('input--error')
-            if (errorSpan) errorSpan.textContent = error
-          } else {
-            input.classList.remove('input--error')
-            if (errorSpan) errorSpan.textContent = ''
-          }
-        })
-      })
-    }
-
     return temp.content
   }
 }

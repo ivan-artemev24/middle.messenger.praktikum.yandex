@@ -14,6 +14,7 @@ interface ButtonProps {
   events?: {
     click?: (event: MouseEvent) => void
   }
+  [key: string]: unknown
 }
 
 export class Button extends Block {
@@ -29,9 +30,11 @@ export class Button extends Block {
     const fragment = temp.content
     const button = fragment.querySelector('button')
 
-    if (button && this.props.events?.click) {
+    const events = this.props.events as ButtonProps['events'] | undefined
+
+    if (button && events?.click) {
       button.addEventListener('click', (e: MouseEvent) => {
-        this.props.events?.click?.(e)
+        events.click?.(e)
       })
     }
 

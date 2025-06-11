@@ -8,81 +8,16 @@ import './login.css'
 
 export class RegistrationPage extends Block {
   constructor () {
-    const emailInput = new InputComponent({
-      id: 'email',
-      name: 'email',
-      label: 'Почта',
-      type: 'text',
-      formId: 'registration',
-      variant: 'standard'
-    })
+    const emailInput = new InputComponent({ id: 'email', name: 'email', label: 'Почта', type: 'text', formId: 'registration', variant: 'standard' })
+    const loginInput = new InputComponent({ id: 'login', name: 'login', label: 'Логин', type: 'text', formId: 'registration', variant: 'standard' })
+    const firstNameInput = new InputComponent({ id: 'first_name', name: 'first_name', label: 'Имя', type: 'text', formId: 'registration', variant: 'standard' })
+    const secondNameInput = new InputComponent({ id: 'second_name', name: 'second_name', label: 'Фамилия', type: 'text', formId: 'registration', variant: 'standard' })
+    const phoneInput = new InputComponent({ id: 'phone', name: 'phone', label: 'Телефон', type: 'text', formId: 'registration', variant: 'standard' })
+    const passwordInput = new InputComponent({ id: 'password', name: 'password', label: 'Пароль', type: 'password', formId: 'registration', variant: 'standard' })
+    const againPasswordInput = new InputComponent({ id: 'again-password', name: 'again-password', label: 'Повторите пароль', type: 'password', formId: 'registration', variant: 'standard' })
 
-    const loginInput = new InputComponent({
-      id: 'login',
-      name: 'login',
-      label: 'Логин',
-      type: 'text',
-      formId: 'registration',
-      variant: 'standard'
-    })
-
-    const firstNameInput = new InputComponent({
-      id: 'first_name',
-      name: 'first_name',
-      label: 'Имя',
-      type: 'text',
-      formId: 'registration',
-      variant: 'standard'
-    })
-
-    const secondNameInput = new InputComponent({
-      id: 'second_name',
-      name: 'second_name',
-      label: 'Фамилия',
-      type: 'text',
-      formId: 'registration',
-      variant: 'standard'
-    })
-
-    const phoneInput = new InputComponent({
-      id: 'phone',
-      name: 'phone',
-      label: 'Телефон',
-      type: 'text',
-      formId: 'registration',
-      variant: 'standard'
-    })
-
-    const passwordInput = new InputComponent({
-      id: 'password',
-      name: 'password',
-      label: 'Пароль',
-      type: 'password',
-      formId: 'registration',
-      variant: 'standard'
-    })
-
-    const againPasswordInput = new InputComponent({
-      id: 'again-password',
-      name: 'again-password',
-      label: 'Повторите пароль',
-      type: 'password',
-      formId: 'registration',
-      variant: 'standard'
-    })
-
-    const submitButton = new ButtonComponent({
-      label: 'Зарегистрироваться',
-      type: 'submit',
-      variant: 'primary'
-    })
-
-    const linkButton = new ButtonComponent({
-      label: 'Войти',
-      type: 'button',
-      variant: 'link',
-      page: 'login'
-    })
+    const submitButton = new ButtonComponent({ label: 'Зарегистрироваться', type: 'submit', variant: 'primary' })
+    const linkButton = new ButtonComponent({ label: 'Войти', type: 'button', variant: 'link', page: 'login' })
 
     super('div', {
       emailInput,
@@ -95,7 +30,7 @@ export class RegistrationPage extends Block {
       submitButton,
       linkButton,
       events: {
-        submit: (e: SubmitEvent) => {
+        submit: function (this: HTMLFormElement, e: SubmitEvent) {
           e.preventDefault()
           const form = e.target as HTMLFormElement
           const inputs = form.querySelectorAll('input')
@@ -105,7 +40,6 @@ export class RegistrationPage extends Block {
 
           inputs.forEach(input => {
             const error = validateInput(input.name, input.value)
-
             if (input.name === 'password') password = input.value
             if (input.name === 'again-password') again = input.value
 
@@ -133,6 +67,7 @@ export class RegistrationPage extends Block {
             if (againInput) {
               const wrapper = againInput.closest('.input-field')
               let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
+
               if (!errorSpan) {
                 errorSpan = document.createElement('span')
                 errorSpan.className = 'input-error-text'
@@ -152,34 +87,11 @@ export class RegistrationPage extends Block {
           for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${String(value)}`)
           }
-        }
-      }
-    })
-  }
+        },
+        focusout: function (e: Event) {
+          const input = e.target as HTMLInputElement
+          if (input.tagName !== 'INPUT') return
 
-  render (): DocumentFragment {
-    const compiled = Handlebars.compile(template)
-    const html = compiled({
-      emailInput: this.props.emailInput?.getContent?.()?.outerHTML ?? '',
-      loginInput: this.props.loginInput?.getContent?.()?.outerHTML ?? '',
-      firstNameInput: this.props.firstNameInput?.getContent?.()?.outerHTML ?? '',
-      secondNameInput: this.props.secondNameInput?.getContent?.()?.outerHTML ?? '',
-      phoneInput: this.props.phoneInput?.getContent?.()?.outerHTML ?? '',
-      passwordInput: this.props.passwordInput?.getContent?.()?.outerHTML ?? '',
-      againPasswordInput: this.props.againPasswordInput?.getContent?.()?.outerHTML ?? '',
-      submitButton: this.props.submitButton?.getContent?.()?.outerHTML ?? '',
-      linkButton: this.props.linkButton?.getContent?.()?.outerHTML ?? ''
-    })
-
-    const temp = document.createElement('template')
-    temp.innerHTML = html
-
-    const form = temp.content.querySelector('form')
-    if (form && typeof this.props.events?.submit === 'function') {
-      form.addEventListener('submit', this.props.events.submit as (this: HTMLFormElement, ev: SubmitEvent) => void)
-      const inputs = form.querySelectorAll('input')
-      inputs.forEach(input => {
-        input.addEventListener('blur', () => {
           const error = validateInput(input.name, input.value)
           const wrapper = input.closest('.input-field')
           let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
@@ -197,10 +109,27 @@ export class RegistrationPage extends Block {
             input.classList.remove('input--error')
             if (errorSpan) errorSpan.textContent = ''
           }
-        })
-      })
-    }
+        }
+      }
+    })
+  }
 
+  render (): DocumentFragment {
+    const compiled = Handlebars.compile(template)
+    const html = compiled({
+      emailInput: (this.props.emailInput as Block)?.getContent?.()?.outerHTML ?? '',
+      loginInput: (this.props.loginInput as Block)?.getContent?.()?.outerHTML ?? '',
+      firstNameInput: (this.props.firstNameInput as Block)?.getContent?.()?.outerHTML ?? '',
+      secondNameInput: (this.props.secondNameInput as Block)?.getContent?.()?.outerHTML ?? '',
+      phoneInput: (this.props.phoneInput as Block)?.getContent?.()?.outerHTML ?? '',
+      passwordInput: (this.props.passwordInput as Block)?.getContent?.()?.outerHTML ?? '',
+      againPasswordInput: (this.props.againPasswordInput as Block)?.getContent?.()?.outerHTML ?? '',
+      submitButton: (this.props.submitButton as Block)?.getContent?.()?.outerHTML ?? '',
+      linkButton: (this.props.linkButton as Block)?.getContent?.()?.outerHTML ?? ''
+    })
+
+    const temp = document.createElement('template')
+    temp.innerHTML = html
     return temp.content
   }
 }

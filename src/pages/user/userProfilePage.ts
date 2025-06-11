@@ -10,10 +10,19 @@ import { userMockData } from '../../mockData'
 import template from './userProfile.hbs?raw'
 import './userProfile.css'
 
+interface User {
+  email: string
+  login: string
+  first_name: string
+  second_name: string
+  display_name: string
+  phone: string
+}
+
 class ModalContent extends Block {
   render (): DocumentFragment {
     const temp = document.createElement('template')
-    temp.innerHTML = this.props.content ?? ''
+    temp.innerHTML = String(this.props.content ?? '')
     return temp.content
   }
 }
@@ -76,13 +85,7 @@ export class UserProfilePage extends Block {
     modalForm.innerHTML = `
       <p class="modal__title">Загрузите файл</p>
       <label class="avatar-modal__file-label">
-        <input
-          type="file"
-          name="avatar"
-          accept="image/*"
-          class="avatar-modal__file-input"
-          aria-label="Выбрать новый аватар"
-        />
+        <input type="file" name="avatar" accept="image/*" class="avatar-modal__file-input" aria-label="Выбрать новый аватар"/>
         <span class="avatar-modal__file-text">Выбрать файл на компьютере</span>
       </label>
     `
@@ -121,10 +124,10 @@ export class UserProfilePage extends Block {
       modal,
       display_name: userMockData.display_name,
       user: userMockData,
+      disableEdit: true,
       events: {
         submit: function (this: HTMLFormElement, e: SubmitEvent) {
           e.preventDefault()
-
           const form = e.target as HTMLFormElement
           const inputs = form.querySelectorAll('input')
           const disabledInputs: HTMLInputElement[] = []
@@ -149,11 +152,11 @@ export class UserProfilePage extends Block {
 
             if (error) {
               input.classList.add('input--error')
-              if (errorSpan) errorSpan.textContent = error
+              errorSpan.textContent = error
               isValid = false
             } else {
               input.classList.remove('input--error')
-              if (errorSpan) errorSpan.textContent = ''
+              errorSpan.textContent = ''
             }
           })
 
@@ -170,51 +173,12 @@ export class UserProfilePage extends Block {
 
           disabledInputs.forEach(input => { input.disabled = true })
           this.setProps({ disableEdit: true })
-        }
-      }
-    })
-  }
+        },
 
-  render (): DocumentFragment {
-    const disableEdit = this.props.disableEdit
-    const u = this.props.user
+        focusout: function (e: Event) {
+          const input = e.target as HTMLInputElement
+          if (input.tagName !== 'INPUT') return
 
-    const emailInput = new InputComponent({ name: 'email', value: u.email, variant: 'line', disabled: disableEdit })
-    const loginInput = new InputComponent({ name: 'login', value: u.login, variant: 'line', disabled: disableEdit })
-    const firstNameInput = new InputComponent({ name: 'first_name', value: u.first_name, variant: 'line', disabled: disableEdit })
-    const secondNameInput = new InputComponent({ name: 'second_name', value: u.second_name, variant: 'line', disabled: disableEdit })
-    const displayNameInput = new InputComponent({ name: 'display_name', value: u.display_name, variant: 'line', disabled: disableEdit })
-    const phoneInput = new InputComponent({ name: 'phone', value: u.phone, variant: 'line', disabled: disableEdit })
-
-    const compiled = Handlebars.compile(template)
-    const html = compiled({
-      ...this.props,
-      avatar: this.props.avatar?.getContent?.()?.outerHTML ?? '',
-      backButton: this.props.backButton?.getContent?.()?.outerHTML ?? '',
-      emailInput: emailInput.getContent()?.outerHTML ?? '',
-      loginInput: loginInput.getContent()?.outerHTML ?? '',
-      firstNameInput: firstNameInput.getContent()?.outerHTML ?? '',
-      secondNameInput: secondNameInput.getContent()?.outerHTML ?? '',
-      displayNameInput: displayNameInput.getContent()?.outerHTML ?? '',
-      phoneInput: phoneInput.getContent()?.outerHTML ?? '',
-      editDataButton: this.props.editDataButton?.getContent?.()?.outerHTML ?? '',
-      editPasswordButton: this.props.editPasswordButton?.getContent?.()?.outerHTML ?? '',
-      logoutButton: this.props.logoutButton?.getContent?.()?.outerHTML ?? '',
-      submitButton: this.props.submitButton?.getContent?.()?.outerHTML ?? '',
-      cancelButton: this.props.cancelButton?.getContent?.()?.outerHTML ?? '',
-      modal: this.props.modal?.getContent?.()?.outerHTML ?? ''
-    })
-
-    const temp = document.createElement('template')
-    temp.innerHTML = html
-
-    const form = temp.content.querySelector('form')
-    if (form && typeof this.props.events?.submit === 'function') {
-      form.addEventListener('submit', this.props.events.submit as (this: HTMLFormElement, ev: SubmitEvent) => void)
-
-      const inputs = form.querySelectorAll('input')
-      inputs.forEach(input => {
-        input.addEventListener('blur', () => {
           const error = validateInput(input.name, input.value)
           const wrapper = input.closest('.input-field')
           let errorSpan = wrapper?.querySelector('.input-error-text') as HTMLElement | null
@@ -227,15 +191,48 @@ export class UserProfilePage extends Block {
 
           if (error) {
             input.classList.add('input--error')
-            if (errorSpan) errorSpan.textContent = error
+            errorSpan.textContent = error
           } else {
             input.classList.remove('input--error')
-            if (errorSpan) errorSpan.textContent = ''
+            errorSpan.textContent = ''
           }
-        })
-      })
-    }
+        }
+      }
+    })
+  }
 
+  render (): DocumentFragment {
+    const disableEdit = Boolean(this.props.disableEdit)
+    const u = this.props.user as User
+
+    const emailInput = new InputComponent({ name: 'email', value: u.email, variant: 'line', disabled: disableEdit })
+    const loginInput = new InputComponent({ name: 'login', value: u.login, variant: 'line', disabled: disableEdit })
+    const firstNameInput = new InputComponent({ name: 'first_name', value: u.first_name, variant: 'line', disabled: disableEdit })
+    const secondNameInput = new InputComponent({ name: 'second_name', value: u.second_name, variant: 'line', disabled: disableEdit })
+    const displayNameInput = new InputComponent({ name: 'display_name', value: u.display_name, variant: 'line', disabled: disableEdit })
+    const phoneInput = new InputComponent({ name: 'phone', value: u.phone, variant: 'line', disabled: disableEdit })
+
+    const compiled = Handlebars.compile(template)
+    const html = compiled({
+      ...this.props,
+      avatar: (this.props.avatar as Block)?.getContent?.()?.outerHTML ?? '',
+      backButton: (this.props.backButton as Block)?.getContent?.()?.outerHTML ?? '',
+      emailInput: emailInput.getContent()?.outerHTML ?? '',
+      loginInput: loginInput.getContent()?.outerHTML ?? '',
+      firstNameInput: firstNameInput.getContent()?.outerHTML ?? '',
+      secondNameInput: secondNameInput.getContent()?.outerHTML ?? '',
+      displayNameInput: displayNameInput.getContent()?.outerHTML ?? '',
+      phoneInput: phoneInput.getContent()?.outerHTML ?? '',
+      editDataButton: (this.props.editDataButton as Block)?.getContent?.()?.outerHTML ?? '',
+      editPasswordButton: (this.props.editPasswordButton as Block)?.getContent?.()?.outerHTML ?? '',
+      logoutButton: (this.props.logoutButton as Block)?.getContent?.()?.outerHTML ?? '',
+      submitButton: (this.props.submitButton as Block)?.getContent?.()?.outerHTML ?? '',
+      cancelButton: (this.props.cancelButton as Block)?.getContent?.()?.outerHTML ?? '',
+      modal: (this.props.modal as Block)?.getContent?.()?.outerHTML ?? ''
+    })
+
+    const temp = document.createElement('template')
+    temp.innerHTML = html
     return temp.content
   }
 }

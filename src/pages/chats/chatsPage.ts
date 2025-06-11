@@ -53,7 +53,19 @@ export class ChatsPage extends Block {
       searchInput: searchInput.getContent()?.outerHTML,
       profileButton: profileButton.getContent()?.outerHTML,
       chatItems: chatItemsHTML,
-      feed: feed.getContent()?.outerHTML
+      feed: feed.getContent()?.outerHTML,
+      events: {
+        submit: (e: SubmitEvent) => {
+          e.preventDefault()
+          const form = e.target as HTMLFormElement
+          const messageInput = form.querySelector<HTMLInputElement>('input[name="message"]')
+          const message = messageInput?.value.trim()
+          if (message && messageInput) {
+            console.log('Новое сообщение:', message)
+            messageInput.value = ''
+          }
+        }
+      }
     })
   }
 
