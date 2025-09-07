@@ -64,4 +64,5 @@ npm run start
 
 [PR Sprint 2](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/7)
 
+[PR Sprint 3](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/8)
 
