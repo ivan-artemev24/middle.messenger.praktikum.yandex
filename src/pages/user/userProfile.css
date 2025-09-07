@@ -86,13 +86,41 @@
 
 .user-profile__controls--edit {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Убедимся, что блок контролов занимает всю ширину */
+  margin-top: 20px;
 }
 
-.user-profile__controls--edit > button {
+.user-profile__controls--edit > * {
   width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Центрируем кнопки по вертикали */
+}
+
+.user-profile__controls--edit > *:not(:last-child) {
+  margin-bottom: -5px; /* Убираем лишний отступ между кнопками */
+}
+
+.user-profile__cancel {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Обеспечиваем, что блок cancel тоже по центру */
 }
 
 .button--exit button {
   color: var(--error-color);
+}
+
+.input--error {
+  border: 1px solid var(--error-color);
+}
+
+.input-error-text {
+  display: block;
+  color: var(--error-color);
+  font-size: 11px;
+  line-height: 13px;
+  margin-top: 4px;
 }

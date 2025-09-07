@@ -1,0 +1,138 @@
+.user-search-modal {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 300px;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.user-search-modal *,
+.user-search-modal *::before,
+.user-search-modal *::after {
+  box-sizing: inherit;
+}
+
+.user-search-modal__header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-search-modal__header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.user-search-modal__search {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.user-search-modal__search-input {
+  flex: 1;
+}
+
+.user-search-modal__search-button {
+  flex-shrink: 0;
+}
+
+.user-search-modal__loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.user-search-modal__results {
+  margin-bottom: 20px;
+}
+
+.user-search-modal__results h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-search-modal__users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-search-modal__user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.user-search-modal__user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; /* позволяет тексту сжиматься внутри flex-контейнера */
+}
+
+.user-search-modal__user-login {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-search-modal__user-name {
+  color: #666;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-search-modal__add-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  flex-shrink: 0; /* кнопка не сжимается и не толкает контент наружу */
+}
+
+.user-search-modal__add-button:hover {
+  background: #0056b3;
+}
+
+.user-search-modal__add-button:active {
+  background: #004085;
+}
+
+.user-search-modal__no-results {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.user-search-modal__footer {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+}

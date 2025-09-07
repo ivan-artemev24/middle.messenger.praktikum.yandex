@@ -1,0 +1,20 @@
+<div class="{{className}}">
+  {{> Avatar src=avatarSrc width="47px" height="47px" alt=alt customClass="chat-item__avatar" isSvg=avatarIsSvg}}
+
+  <div class="chat-item__info">
+    <span class="chat-item__name">{{name}}</span>
+    {{#if lastMessage}}
+      <span class="chat-item__last">{{lastMessage}}</span>
+    {{/if}}
+  </div>
+
+  <div class="chat-item__meta-info">
+    {{#if lastMessageTime}}
+      <span class="chat-item__time">{{lastMessageTime}}</span>
+    {{/if}}
+
+    {{#if unreadCount}}
+      <div class="chat-item__badge">{{unreadCount}}</div>
+    {{/if}}
+  </div>
+</div>

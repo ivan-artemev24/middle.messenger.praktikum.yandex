@@ -2,17 +2,17 @@
   <form id="registration" class="login__form-card registration__form-card">
     <div>
       <h1 class="login__title">Регистрация</h1>
-      {{> Input id="email" name="email" label="Почта" type="email" formId="registration" variant="standard" customClass="login__input"}}
-      {{> Input id="login" name="login" label="Логин" type="text" formId="registration" variant="standard" customClass="login__input"}}
-      {{> Input id="first_name" name="first_name" label="Имя" type="text" formId="registration" variant="standard" customClass="login__input"}}
-      {{> Input id="second_name" name="second_name" label="Фамилия" type="text" formId="registration" variant="standard" customClass="login__input"}}
-      {{> Input id="phone" name="phone" label="Телефон" type="tel" formId="registration" variant="standard" customClass="login__input"}}
-      {{> Input id="password" name="password" label="Пароль" type="password" formId="registration" variant="standard" customClass="login__input"}}
-      {{> Input id="again-password" name="again-password" label="Пароль (ещё раз)" type="password" formId="registration" variant="standard"}}
+      {{{emailInput}}}
+      {{{loginInput}}}
+      {{{firstNameInput}}}
+      {{{secondNameInput}}}
+      {{{phoneInput}}}
+      {{{passwordInput}}}
+      {{{againPasswordInput}}}
     </div>
     <div class="login__button-wrapper">
-      {{> Button label="Зарегистрироваться" variant="primary" page="chats" type="submit"}}
-      {{> Button label="Войти" variant="link" page="login" type="button"}}
+      {{{submitButton}}}
+      {{{linkButton}}}
     </div>
   </form>
 </div>

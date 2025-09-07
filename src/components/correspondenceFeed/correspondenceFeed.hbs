@@ -1,30 +1,35 @@
 <div class="feed">
-  <header class="feed__header">
-    <div class="feed__contact">
-      {{> Avatar avatar=contact.avatar width="34px" height="34px" alt=contact.name }}
-      <span>{{contact.name}}</span>
-    </div>
-    <button type="button" class="menu-button" aria-label="Меню">
-      <span class="point"></span>
-      <span class="point"></span>
-      <span class="point"></span>
-    </button>
-  </header>
-
-  <div class="feed__main">
-    {{#each messages}}
-      <div class="message{{#if isOwn}} message--own{{/if}}{{#if image}} message--image-only{{/if}}">
-        {{#if text}}<p>{{text}}</p>{{/if}}
-        {{#if image}}<img src="{{image}}" alt="media" class="message__image" />{{/if}}
-        <div class="message__time{{#if image}} message__time--darkened{{/if}}">{{time}}</div>
+  <div class="feed__header">
+    {{#if chatUsers}}
+      <div class="feed__users">
+        {{#each chatUsers}}
+          <div class="feed__user-chip" title="@{{login}}">
+            <span class="feed__user-avatar">{{#if avatar}}<img src="https://ya-praktikum.tech/api/v2/resources{{avatar}}" alt="" />{{else}}{{#if ../avatarIsSvg}}{{{../avatarFallback}}}{{else}}<img src="{{../avatarFallback}}" alt="" />{{/if}}{{/if}}</span>
+            <span class="feed__user-name">{{default display_name (default first_name login)}}</span>
+          </div>
+        {{/each}}
       </div>
-    {{/each}}
+    {{/if}}
   </div>
 
-  <div class="feed__new-message">
-    <form id="new-message">
-      {{> Input id="message" formId="new-message" label="Сообщение" type="text" variant="outlined" customClass="feed__input" }}
-      {{> Button icon=arrowIcon variant="icon" type="submit"}}
-    </form>
+  <div class="feed__messages" id="feed-messages">
+    {{#if messages.length}}
+      {{#each messages}}
+        {{#if this.content}}
+          <div class="feed__message {{#if this.isMine}}feed__message--mine{{/if}}">
+            <div class="feed__bubble">
+              {{this.content}}
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+    {{else}}
+      <div class="feed__empty">Пока нет сообщений</div>
+    {{/if}}
   </div>
+
+  <form class="feed__footer" data-form="send">
+    {{{input}}}
+    {{{button}}}
+  </form>
 </div>
