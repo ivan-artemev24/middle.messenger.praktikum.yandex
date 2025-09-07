@@ -1,3 +1,2 @@
-import "./login.css";
-export { default as LoginPage } from "./login.hbs?raw";
-export { default as RegistrationPage } from "./registration.hbs?raw";
+export { LoginPage } from './loginPage'
+export { RegistrationPage } from './registrationPage'

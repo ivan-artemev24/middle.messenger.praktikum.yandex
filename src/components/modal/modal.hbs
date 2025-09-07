@@ -1,6 +1,14 @@
+<!--<div class="modal{{#if active}} modal--active{{/if}}" id="{{id}}" role="dialog" aria-modal="true">-->
+<!--  <div class="modal__overlay" data-close="true"></div>-->
+<!--  <div class="modal__content">-->
+<!--    <button class="modal__close-button" type="button" data-close="true" aria-label="Закрыть">×</button>-->
+<!--    &lt;!&ndash; Контент будет вставлен программно &ndash;&gt;-->
+<!--  </div>-->
+<!--</div>-->
 <div class="modal{{#if active}} modal--active{{/if}}" id="{{id}}" role="dialog" aria-modal="true">
   <div class="modal__overlay" data-close="true"></div>
-  <div class="modal__content">
-    {{> @partial-block }}
+  <div class="modal__content" id="modal-content-root">
+    <button class="modal__close-button" type="button" data-close="true" aria-label="Закрыть">×</button>
+    <!-- Контент будет вставлен программно -->
   </div>
 </div>

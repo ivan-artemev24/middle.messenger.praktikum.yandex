@@ -1,82 +1,117 @@
-import Handlebars from "handlebars";
-import * as Components from "./components";
-import * as Pages from "./pages";
-import "./style.css";
-import "./helpers/handlebarsHelpers.js";
+import Handlebars from 'handlebars'
+import * as ComponentPartials from './components'
 
-import arrowIcon from "./assets/arrow-icon.svg?raw";
-import searchIcon from "./assets/search-icon.svg?raw";
+import {
+  LoginPage,
+  RegistrationPage,
+  ChatsPageWithData,
+  UserProfilePageReadOnly,
+  UserProfilePageEdit,
+  EditPasswordPageWithContext,
+  Error404Page,
+  Error500Page
+} from './pages'
 
-import { chatsMockData, userMockData } from "./mockData.js";
+import './style.css'
+import './helpers/handlebarsHelpers.js'
 
-type PageContext = Record<string, any>;
-type PageEntry = [string, PageContext];
+import { Router } from './core/router'
+import { authApi } from './api/authApi'
 
-const baseUserContext = {
-  arrowIcon,
-  user: userMockData,
-};
+// === Регистрация partial'ов (Avatar, Button, Input и пр.)
+Object.entries(ComponentPartials).forEach(([name, value]) => {
+  if (typeof value === 'string') {
+    Handlebars.registerPartial(name, value)
+  }
+})
 
-const pages: Record<string, PageEntry> = {
-  login: [Pages.LoginPage, {}],
-  registration: [Pages.RegistrationPage, {}],
-  chats: [Pages.ChatsPage, {
-    arrowIcon,
-    searchIcon,
-    showDialog: true,
-    data: chatsMockData,
-  }],
-  "user-profile": [Pages.UserProfilePage, {
-    ...baseUserContext,
-    disableEdit: true,
-  }],
-  "edit-user-profile": [Pages.UserProfilePage, {
-    ...baseUserContext,
-    disableEdit: false,
-  }],
-  "edit-password": [Pages.EditPasswordPage, {
-    ...baseUserContext,
-  }],
-};
+// === Инициализация роутера
+const router = new Router('#app')
+window.router = router
 
-Object.entries(Components).forEach(([name, template]) => {
-  Handlebars.registerPartial(name, template);
-});
+router
+  .use('/', LoginPage)
+  .use('/sign-up', RegistrationPage)
+  .use('/messenger', ChatsPageWithData)
+  .use('/user-profile', UserProfilePageReadOnly)
+  .use('/settings', UserProfilePageEdit)
+  .use('/edit-password', EditPasswordPageWithContext)
+  .use('/404', Error404Page)
+  .use('/500', Error500Page)
 
-function navigate(page: string): void {
-  const pageEntry = pages[page];
-  if (!pageEntry) {
-    console.warn(`Page "${page}" not found.`);
-    return;
+// === Проверка авторизации и редиректы
+const protectedRoutes = [
+  '/messenger',
+  '/user-profile',
+  '/settings',
+  '/edit-password'
+]
+
+let isAuthed: boolean | null = null
+
+function applyAuthRedirects (pathname: string): string | null {
+  // Авторизован: редиректим со страниц авторизации на мессенджер
+  if (isAuthed === true && (pathname === '/' || pathname === '/sign-up')) {
+    return '/messenger'
   }
 
-  const [source, context] = pageEntry;
-  const container = document.getElementById("app");
-  if (!container) return;
+  // Не авторизован: защищённые роуты отправляем на логин
+  if (isAuthed === false && protectedRoutes.includes(pathname)) {
+    return '/'
+  }
 
-  const render = Handlebars.compile(source);
-  container.innerHTML = render(context);
+  return null
 }
 
-function getCurrentPage(): string {
-  const parts = window.location.pathname.split("/").filter(Boolean);
-  return parts.length ? parts[0] : "login";
+function startWithGuards () {
+  const current = window.location.pathname
+  const redirect = applyAuthRedirects(current)
+  if (redirect && redirect !== current) {
+    router.go(redirect)
+    return
+  }
+  router.start()
 }
 
-function handleNavigationClick(event: MouseEvent): void {
-  const target = (event.target as HTMLElement)?.closest("[data-page]");
-  if (!target) return;
+authApi.getUser()
+  .then(() => {
+    isAuthed = true
+    startWithGuards()
+  })
+  .catch((err: any) => {
+    if (err && (err.status === 401 || err.reason === 'Cookie is not valid')) {
+      isAuthed = false
+      startWithGuards()
+    } else {
+      console.error('Ошибка при получении пользователя:', err)
+      router.go('/500')
+    }
+  })
 
-  const page = target.getAttribute("data-page");
+// Глобальный способ обновить состояние авторизации из страниц
+;(window as any).setAuthState = (value: boolean) => {
+  isAuthed = value
+}
+
+// Оборачиваем router.go для применения гардов при программной навигации
+const originalGo = router.go.bind(router)
+router.go = (pathname: string) => {
+  const redirect = applyAuthRedirects(pathname)
+  if (redirect && redirect !== pathname) {
+    originalGo(redirect)
+    return
+  }
+  originalGo(pathname)
+}
+
+// === Навигация по data-page
+document.addEventListener('click', (event) => {
+  const target = (event.target as HTMLElement).closest('[data-page]')
+  if (!target) return
+
+  const page = target.getAttribute('data-page')
   if (page) {
-    navigate(page);
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    event.preventDefault()
+    router.go(page.startsWith('/') ? page : `/${page}`)
   }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  navigate(getCurrentPage());
-});
-
-document.addEventListener("click", handleNavigationClick);
+})

@@ -1,17 +1,15 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: ".",
-  publicDir: "./public",
   build: {
-    outDir: "./dist",
-    emptyOutDir: true,
+    outDir: './dist',
+    emptyOutDir: true
   },
   server: {
-    port: 3000,
+    port: 3000
   },
   preview: {
-    port: 3000,
+    port: 3000
   },
-  css: {}
+  appType: 'spa'
 });

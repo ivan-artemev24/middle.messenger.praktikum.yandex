@@ -3,6 +3,11 @@
   display: flex;
 }
 
+.chat-input {
+  width: 100%;
+}
+
+/* Левая колонка */
 .chats__sidebar {
   width: 25%;
   min-width: 310px;
@@ -14,29 +19,51 @@
   padding: 21px 10px 14px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
-.chats__button-link {
-  color: var(--text-secondary-color);
-  font-size: 12px;
-  line-height: 12px;
-  margin-bottom: 23px;
-  align-self: flex-end;
+/* Строка: Профиль + Создать чат */
+.chats__top-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.chats__button-link:hover {
-  color: var(--primary-color);
-}
-
+/* Список чатов */
 .chats__list {
   height: calc(100vh - 105px);
   border-top: 1px solid var(--border-color);
   overflow: auto;
 }
 
+/* Правая колонка */
 .chats__main {
   flex: 1;
   height: 100vh;
   min-width: 320px;
   border-left: 1px solid var(--border-color);
+
+  /* Чтобы лента растягивалась и имела собственный скролл */
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* важно для корректного overflow у дочерних */
+}
+
+/* Панель действий над лентой (кнопки add/remove/delete) */
+.chats__actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Контент ленты занимает всё оставшееся место */
+#chat-feed > *:not(.chats__actions) {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Утилита для скрытия кнопок действий, когда чата нет */
+.hidden {
+  display: none !important;
 }

@@ -1,0 +1,124 @@
+C:.
+|   .eslintignore
+|   .eslintrc.cjs
+|   .gitignore
+|   index.html
+|   package-lock.json
+|   package.json
+|   postcss.config.js
+|   README.md
+|   structure.txt
+|   stylelint.config.cjs
+|   tsconfig.json
+|   vite.config.js
+|   
++---.vite
+|   \---deps
+|           package.json
+|           _metadata.json
+|           
++---public
+|       404.html
+|       500.html
+|       vite.svg
+|       _redirects
+|       
+\---src
+    |   main.ts
+    |   mockData.ts
+    |   structure.txt
+    |   style.css
+    |   vite-env.d.ts
+    |   
+    +---api
+    |       authApi.ts
+    |       chatsApi.ts
+    |       http.ts
+    |       
+    +---assets
+    |       arrow-icon.svg
+    |       avatar.jpg
+    |       camera.jpg
+    |       search-icon.svg
+    |       
+    +---components
+    |   |   index.ts
+    |   |   
+    |   +---avatar
+    |   |       avatar.css
+    |   |       avatar.hbs
+    |   |       avatar.ts
+    |   |       index.ts
+    |   |       
+    |   +---button
+    |   |       button.css
+    |   |       button.hbs
+    |   |       button.ts
+    |   |       index.ts
+    |   |       
+    |   +---chatItem
+    |   |       chatItem.css
+    |   |       chatItem.hbs
+    |   |       chatItem.ts
+    |   |       index.ts
+    |   |       
+    |   +---correspondenceFeed
+    |   |       correspondenceFeed.hbs
+    |   |       correspondenceFeed.ts
+    |   |       emptyFeed.hbs
+    |   |       feed.css
+    |   |       index.ts
+    |   |       
+    |   +---input
+    |   |       index.ts
+    |   |       input.css
+    |   |       input.hbs
+    |   |       input.ts
+    |   |       
+    |   \---modal
+    |           index.ts
+    |           modal.css
+    |           modal.hbs
+    |           modal.ts
+    |           
+    +---core
+    |       Block.ts
+    |       EventBus.ts
+    |       route.ts
+    |       router.ts
+    |       
+    +---helpers
+    |       handlebarsHelpers.js
+    |       
+    +---pages
+    |   |   index.ts
+    |   |   
+    |   +---chats
+    |   |       chats.css
+    |   |       chats.hbs
+    |   |       chatsPage.ts
+    |   |       index.ts
+    |   |       
+    |   +---errors
+    |   |       error404Page.ts
+    |   |       error500Page.ts
+    |   |       
+    |   +---login
+    |   |       index.ts
+    |   |       login.css
+    |   |       login.hbs
+    |   |       loginPage.ts
+    |   |       registration.hbs
+    |   |       registrationPage.ts
+    |   |       
+    |   \---user
+    |           editPassword.hbs
+    |           editPasswordPage.ts
+    |           index.ts
+    |           userProfile.css
+    |           userProfile.hbs
+    |           userProfilePage.ts
+    |           
+    \---utils
+            validation.ts
+            
