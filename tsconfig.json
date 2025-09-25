@@ -23,7 +23,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "isolatedModules": true
+    "isolatedModules": true,
+    "types": ["jest"]
   },
-  "include": ["src"]
+  "include": ["src", "jest.setup.ts"]
 }

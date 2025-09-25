@@ -16,7 +16,11 @@ describe('Router', () => {
 
   beforeEach(() => {
     document.body.innerHTML = '<div id="app"></div>'
-    root = document.getElementById('app')!
+    const appElement = document.getElementById('app')
+    if (!appElement) {
+      throw new Error('App element not found')
+    }
+    root = appElement
     router = new Router('#app')
   })
 

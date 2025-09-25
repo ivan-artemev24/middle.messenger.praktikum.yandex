@@ -15,6 +15,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off'
   },
+  ignorePatterns: ['scripts/**/*.js', 'test/**/*.js'],
   overrides: [
     {
       files: ['*.css'],
@@ -22,13 +23,16 @@ module.exports = {
       rules: {}
     },
     {
-      files: ['jest.setup.ts', 'scripts/**/*.js', 'test/**/*.js'],
+      files: ['jest.setup.ts'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: null
+        project: './tsconfig.json',
+        ecmaVersion: 'latest',
+        sourceType: 'module'
       },
       rules: {
-        '@typescript-eslint/dot-notation': 'off'
+        '@typescript-eslint/dot-notation': 'off',
+        '@typescript-eslint/no-implied-eval': 'off'
       }
     }
   ]
