@@ -20,6 +20,16 @@ module.exports = {
       files: ['*.css'],
       parser: 'none',
       rules: {}
+    },
+    {
+      files: ['jest.setup.ts', 'scripts/**/*.js', 'test/**/*.js'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: null
+      },
+      rules: {
+        '@typescript-eslint/dot-notation': 'off'
+      }
     }
   ]
 }
