@@ -79,4 +79,4 @@ tsc --noEmit       # Проверка типов вручную
 
 
 
-[PR Sprint 4](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/9)
+[PR Sprint 4](https://github.com/ivan-artemev24/middle.messenger.praktikum.yandex/pull/10)
