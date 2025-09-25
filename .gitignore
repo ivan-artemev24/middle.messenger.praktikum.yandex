@@ -1,19 +1,40 @@
+# dependencies
 node_modules/
+
+# production
 dist/
 .vite/
 
-# Logs
+# environment variables
+.env
+.env.*.local
+
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# system
-.DS_Store
-Thumbs.db
-
-# IDE
+# editor directories and settings
 .idea/
 .vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
-# dotenv
-.env
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+
+# coverage (если используешь тесты)
+coverage/
+
+# optional: lockfile for other package managers
+# yarn.lock
+# pnpm-lock.yaml

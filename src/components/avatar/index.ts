@@ -1,2 +1,2 @@
-import "./avatar.css";
-export { default as Avatar } from "./avatar.hbs?raw";
+export { default } from './avatar.hbs?raw' // Handlebars шаблон
+export { AvatarComponent } from './avatar' // Класс компонента
