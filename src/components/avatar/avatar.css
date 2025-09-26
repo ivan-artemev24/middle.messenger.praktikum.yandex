@@ -3,7 +3,7 @@
   height: var(--avatar-height, auto);
   border-radius: 50%;
   overflow: hidden;
-  background-color: var(--background-fill-color, #eee);
+  background-color: var(--background-fill-color, #eeeeee);
 }
 
 .avatar img {

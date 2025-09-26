@@ -22,7 +22,7 @@
 
 .user-search-modal__header h3 {
   margin: 0;
-  color: #333;
+  color: #333333;
   font-size: 18px;
   font-weight: 600;
 }
@@ -45,7 +45,7 @@
 .user-search-modal__loading {
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: #666666;
 }
 
 .user-search-modal__results {
@@ -54,7 +54,7 @@
 
 .user-search-modal__results h4 {
   margin: 0 0 12px 0;
-  color: #333;
+  color: #333333;
   font-size: 14px;
   font-weight: 600;
 }
@@ -85,7 +85,7 @@
 
 .user-search-modal__user-login {
   font-weight: 600;
-  color: #333;
+  color: #333333;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
@@ -93,7 +93,7 @@
 }
 
 .user-search-modal__user-name {
-  color: #666;
+  color: #666666;
   font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
@@ -124,7 +124,7 @@
 .user-search-modal__no-results {
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: #666666;
   font-style: italic;
 }
 
